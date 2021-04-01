@@ -1,0 +1,26 @@
+#version 450
+layout(set = 0, binding = 0) buffer Target {
+    float[] target;
+};
+
+layout(set = 0, binding = 1) buffer InputA {
+    float[] inputA;
+};
+
+layout(set = 0, binding = 2) buffer InputB {
+    float[] inputB;
+};
+
+
+float f(float a, float b){
+    float x_a = 1.0 - a;
+    float x_b = 1.0 - b;;
+    float y = x_a * x_b;
+    float z = 1.0 - y;
+    return z;
+}
+
+void main() {
+    uint index = gl_GlobalInvocationID.x;
+    target[index] = f(inputA[index], inputB[index]);
+}
